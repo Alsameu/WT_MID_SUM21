@@ -33,8 +33,8 @@
     $gender = "";
     $err_gender = "";
 
-    $aboutUs=[];
-	$err_aboutUs="";
+    $myinfo=[];
+	$err_myinfo="";
 
     $bio="";
 	$err_bio="";
@@ -43,31 +43,30 @@
 
     $months = array("January","February","March","April","May","June","July","August","September","October","November","December");
 
-    //Check if a about us option checked
-    function aboutUsExist($aboutus){
-		global $aboutUs;
-		foreach($aboutUs as $h){
-			if($h == $aboutus) return true;
+   
+    function myinfoExist($aboutus){
+		global $myinfo;
+		foreach($myinfo as $h){
+			if($h == $myinfo) return true;
 		}
 		return false;
 	}
 
-    //Check if a string contains numbers or not
-    function isNumberExist($value){
 
+    function isNumberExist($value){
+          $numberExist = false;
         $len = strlen($value);
 
         for($i=0; $i<$len; $i++){
             if(is_numeric($value[$i])){
-               return true;
+              $numberExist = true; 
             }
         }
 
-        return false;
+        return $numberExist;
     }
 
-    //Check if any upper case exists
-    function upperCaseExist($value){
+    function checkupperCaseExist($value){
         
         $len = strlen($value);
 
@@ -81,8 +80,7 @@
 
     }
 
-    //Check if any lower case exists
-    function lowerCaseExist($value){
+    function checklowerCaseExist($value){
         
         $len = strlen($value);
 
@@ -96,7 +94,7 @@
 
     }
 
-    //if form submitted
+  
     if(isset($_POST["submit"])){
 
 		if(empty($_POST["name"])){
@@ -131,12 +129,12 @@
         }
         else if(!strpos($_POST["email"],"@")){
             $hasError = true;
-            $err_email = "Must Contain '@' .";
+            $err_email = "Contain '@' .";
 
         }
         else if(!strpos($_POST["email"],".",strpos($_POST["email"],"@")+1)){
             $hasError = true;
-            $err_email = "Must contain '.' after '@' .";
+            $err_email = "contain '.' after '@' .";
 
         }
         else{
@@ -161,7 +159,7 @@
             $hasError = true;
             $err_password = "Must Contain a number.";
         }
-        else if(!upperCaseExist($_POST["password"]) || !lowerCaseExist($_POST["password"])){
+        else if(!checkupperCaseExist($_POST["password"]) || !checklowerCaseExist($_POST["password"])){
             $hasError = true;
             $err_password = "Must contain Upper and Lower case.";
 
@@ -264,7 +262,7 @@
             $zipCode = $_POST["zipCode"];
         }
 
-        //Gender Validation
+       
         if(!isset($_POST["gender"])){
 			$hasError = true;
 			$err_gender="Gender Required";
@@ -274,7 +272,7 @@
 
         }
 		
-        //About Us Section validation
+       
         if(!isset($_POST["aboutUs"])){
 			$hasError = true;
 			$err_aboutUs="About Us Required";
@@ -284,7 +282,7 @@
 		}
 
 
-        //Bio validation
+        
         if(empty($_POST["bio"])){
 			$hasError = true;
 			$err_bio = "Bio Required";
@@ -431,12 +429,12 @@
                 <tr>
 					<td>Where did you here about us?</td>
 					<td>
-                        <input type="checkbox" name="aboutUs[]" <?php if(aboutUsExist("A Friend Or Colleague")) echo "checked";?> value="A Friend Or Colleague"><b>A Friend Or Colleague</b><br>
-                        <input type="checkbox" name="aboutUs[]" <?php if(aboutUsExist("Google")) echo "checked";?> value="Google"> <b> Google </b><br>
-                        <input type="checkbox" name="aboutUs[]" <?php if(aboutUsExist("Blog Post")) echo "checked";?> value="Blog Post"> <b> Blog Post </b><br>
-                        <input type="checkbox" name="aboutUs[]" <?php if(aboutUsExist("New Article")) echo "checked";?> value="New Article"> <b> New Article </b><br>
+                        <input type="checkbox" name="myinfo[]" <?php if(myinfoExist("A Friend Or Colleague")) echo "checked";?> value="A Friend Or Colleague"><b>A Friend Or Colleague</b><br>
+                        <input type="checkbox" name="myinfo[]" <?php if(myinfoExist("Google")) echo "checked";?> value="Google"> <b> Google </b><br>
+                        <input type="checkbox" name="myinfo[]" <?php if(myinfoExist("Blog Post")) echo "checked";?> value="Blog Post"> <b> Blog Post </b><br>
+                        <input type="checkbox" name="myinfo[]" <?php if(myinfoExist("New Article")) echo "checked";?> value="New Article"> <b> New Article </b><br>
 					</td>
-					<td><span> <?php echo $err_aboutUs;?> </span></td>
+					<td><span> <?php echo $err_myinfo;?> </span></td>
 				</tr>
                 <tr>
 					<td>Bio :</td>
