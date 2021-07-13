@@ -1,4 +1,5 @@
 <?php
+include 'models/db_config.php';
 	$name="";
 	$err_name="";
 	$uname="";
